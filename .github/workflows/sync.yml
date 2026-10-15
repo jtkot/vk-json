@@ -36,7 +36,7 @@ jobs:
         id: commit
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "41898332+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add vk.json .github/data/UPSTREAM_COMMIT
           if ! git diff --cached --quiet; then
             git commit -m "Sync Vulkan-Docs $(cut -c1-7 .github/data/UPSTREAM_COMMIT)"
