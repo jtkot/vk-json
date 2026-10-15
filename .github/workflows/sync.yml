@@ -42,7 +42,8 @@ jobs:
             git commit -m "Sync Vulkan-Docs $(cut -c1-7 .github/data/UPSTREAM_COMMIT)"
             git push
 
-            VER=$(python -c "import json;print(json.load(open('vk.json'))['meta']['headerVersion'])")
-            git tag "v$VER"
-            git push --tags
+            VER="$(python -c "import json;print(json.load(open('vk.json'))['meta']['headerVersion'])")"
+            TAG="v$VER"
+            git tag "$TAG"
+            git push -f tag "$TAG"
           fi
