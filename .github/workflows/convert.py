@@ -284,14 +284,20 @@ def generic_collection(container):
 
 
 def header_version(root):
-    for e in root.iter("enum"):
-        if e.get("name") == "VK_HEADER_VERSION" and e.get("value"):
-            return to_int(e.get("value"))
     for t in root.iter("type"):
         if t.get("category") == "define" and t.findtext("name") == "VK_HEADER_VERSION":
             m = re.search(r"VK_HEADER_VERSION\s+(\d+)", "".join(t.itertext()))
             if m:
                 return int(m.group(1))
+    return None
+
+def header_version_complete(root):
+    for t in root.iter("type"):
+        # Versioning is based on the main variant
+        if t.get("category") == "define" and t.findtext("name") == "VK_HEADER_VERSION_COMPLETE" and "vulkan" in t.get("api").split(","):
+            m = re.search(r"VK_MAKE_API_VERSION\(0, (\d+), (\d+), VK_HEADER_VERSION\)", "".join(t.itertext()))
+            if m:
+                return f"{int(m.group(1))}.{int(m.group(2))}.{int(header_version(root) or 0)}"
     return None
 
 
@@ -300,7 +306,7 @@ def convert(path, commit=None):
     result = {"meta": {
         "source": "KhronosGroup/Vulkan-Docs",
         "commit": commit,
-        "headerVersion": header_version(root),
+        "headerVersion": header_version_complete(root),
     }}
     enums, constants = {}, {}
     sections = {}

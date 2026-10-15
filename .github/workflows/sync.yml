@@ -43,7 +43,6 @@ jobs:
             git push
 
             VER=$(python -c "import json;print(json.load(open('vk.json'))['meta']['headerVersion'])")
-            TAG="v1.4.$VER-$(cut -c1-7 .github/data/UPSTREAM_COMMIT)"
-            git tag "$TAG"
+            git tag "v$VER"
             git push --tags
           fi
