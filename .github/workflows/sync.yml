@@ -5,7 +5,7 @@ on:
     - cron: "0 4 * * *"
   workflow_dispatch:
   push:
-    paths: ["convert.py", ".github/workflows/sync.yml"]
+    paths: [".github/workflows/convert.py", ".github/workflows/sync.yml"]
 
 permissions:
   contents: write
@@ -29,8 +29,8 @@ jobs:
       - name: Convert
         run: |
           SHA=$(cat UPSTREAM_COMMIT)
-          python convert.py --input vk.xml --output vk.json --commit "$SHA"
-          python convert.py --input vk.xml --output vk.min.json --minify --commit "$SHA"
+          python .github/workflows/convert.py --input vk.xml --output vk.json --commit "$SHA"
+          python .github/workflows/convert.py --input vk.xml --minify --output vk.min.json --commit "$SHA"
 
       - name: Commit if changed
         id: commit
