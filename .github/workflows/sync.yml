@@ -24,11 +24,11 @@ jobs:
         run: |
           SHA=$(git ls-remote https://github.com/KhronosGroup/Vulkan-Docs refs/heads/main | cut -f1)
           curl -fsSL "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/$SHA/xml/vk.xml" -o vk.xml
-          echo "$SHA" > UPSTREAM_COMMIT
+          echo "$SHA" > .github/data/UPSTREAM_COMMIT
 
       - name: Convert
         run: |
-          SHA=$(cat UPSTREAM_COMMIT)
+          SHA=$(cat .github/data/UPSTREAM_COMMIT)
           python .github/workflows/convert.py --input vk.xml --output vk.json --commit "$SHA"
           python .github/workflows/convert.py --input vk.xml --minify --output vk.min.json --commit "$SHA"
 
@@ -37,11 +37,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898332+github-actions[bot]@users.noreply.github.com"
-          git add vk.xml vk.json vk.min.json UPSTREAM_COMMIT
+          git add vk.json vk.min.json .github/data/UPSTREAM_COMMIT
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            git commit -m "Sync Vulkan-Docs $(cut -c1-7 UPSTREAM_COMMIT)"
+            git commit -m "Sync Vulkan-Docs $(cut -c1-7 .github/data/UPSTREAM_COMMIT)"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
@@ -52,7 +52,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           VER=$(python -c "import json;print(json.load(open('vk.json'))['meta']['headerVersion'])")
-          TAG="v1.4.$VER-$(cut -c1-7 UPSTREAM_COMMIT)"
+          TAG="v1.4.$VER-$(cut -c1-7 .github/data/UPSTREAM_COMMIT)"
           gh release create "$TAG" vk.json vk.min.json \
-            --title "Vulkan header $VER ($(cut -c1-7 UPSTREAM_COMMIT))" \
-            --notes "Generated from KhronosGroup/Vulkan-Docs@$(cat UPSTREAM_COMMIT)"
+            --title "Vulkan header $VER ($(cut -c1-7 .github/data/UPSTREAM_COMMIT))" \
+            --notes "Generated from KhronosGroup/Vulkan-Docs@$(cat .github/data/UPSTREAM_COMMIT)"
