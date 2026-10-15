@@ -21,12 +21,14 @@ jobs:
           python-version: "3.12"
 
       - name: Fetch upstream vk.xml
+        id: fetch
         run: |
           SHA=$(git ls-remote https://github.com/KhronosGroup/Vulkan-Docs refs/heads/main | cut -f1)
           curl -fsSL "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/$SHA/xml/vk.xml" -o vk.xml
           echo "$SHA" > .github/data/UPSTREAM_COMMIT
 
       - name: Convert
+        id: convert
         run: |
           SHA=$(cat .github/data/UPSTREAM_COMMIT)
           python .github/workflows/convert.py --input vk.xml --output vk.json --commit "$SHA"
