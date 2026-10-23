@@ -1,8 +1,8 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "193ebe195f47ffc5004683d1659e71c725658c4d",
-    "headerVersion": "1.4.365",
+    "commit": "a8b088a3fae12c8575407ea90c7c09bd653db923",
+    "headerVersion": "1.4.366",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
       "This file, vk.xml, is the Vulkan API Registry. It is a critically important\nand normative part of the Vulkan Specification, including a canonical\nmachine-readable definition of the API, parameter and member validation\nlanguage incorporated into the Specification and reference pages, and other\nmaterial which is registered by Khronos, such as tags used by extension and\nlayer authors. The authoritative public version of vk.xml is maintained in\nthe default branch (currently named main) of the Khronos Vulkan GitHub\nproject. The authoritative private version is maintained in the default\nbranch of the member gitlab server."
@@ -1804,6 +1804,17 @@
           "value": 0
         },
         "VK_ANTI_LAG_STAGE_PRESENT_AMD": {
+          "value": 1
+        }
+      }
+    },
+    "VkHdrSmpteSt209450PowerPreferenceGOOGLE": {
+      "type": "enum",
+      "values": {
+        "VK_HDR_SMPTE_ST_209450_POWER_PREFERENCE_COLOR_ACCURACY_GOOGLE": {
+          "value": 0
+        },
+        "VK_HDR_SMPTE_ST_209450_POWER_PREFERENCE_LOW_POWER_GOOGLE": {
           "value": 1
         }
       }
@@ -3983,6 +3994,14 @@
         "VK_DRIVER_ID_APEX": {
           "value": 32,
           "comment": "Apex Compute"
+        },
+        "VK_DRIVER_ID_NIKKI": {
+          "value": 33,
+          "comment": "nikki Vulkan-on-WebGPU implementation"
+        },
+        "VK_DRIVER_ID_MOMOTEN": {
+          "value": 34,
+          "comment": "momoten Vulkan-on-OpenCL implementation"
         }
       }
     },
@@ -7921,7 +7940,7 @@
         "vulkan",
         "vulkanbase"
       ],
-      "text": "// Version of this file #define VK_HEADER_VERSION 365",
+      "text": "// Version of this file #define VK_HEADER_VERSION 366",
       "variants": [
         {
           "category": "define",
@@ -10922,6 +10941,9 @@
     "VkPerformanceCounterDescriptionFlagBitsARM": {
       "category": "enum"
     },
+    "VkHdrSmpteSt209450PowerPreferenceGOOGLE": {
+      "category": "enum"
+    },
     "VkVendorId": {
       "category": "enum"
     },
@@ -12626,6 +12648,9 @@
         {
           "name": "flags",
           "type": "VkImageCreateFlags2KHR",
+          "optional": [
+            true
+          ],
           "limitType": "bitmask"
         }
       ]
@@ -24769,6 +24794,71 @@
           "len": [
             "dynamicMetadataSize"
           ]
+        }
+      ]
+    },
+    "VkHdrSmpteSt209450GOOGLE": {
+      "category": "struct",
+      "structExtends": [
+        "VkHdrMetadataEXT"
+      ],
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_HDR_SMPTE_ST_209450_GOOGLE"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "const": true,
+          "pointer": 1,
+          "optional": [
+            true
+          ]
+        },
+        {
+          "name": "metadataSize",
+          "type": "size_t"
+        },
+        {
+          "name": "pMetadata",
+          "type": "void",
+          "const": true,
+          "pointer": 1,
+          "len": [
+            "metadataSize"
+          ]
+        },
+        {
+          "name": "powerPreference",
+          "type": "VkHdrSmpteSt209450PowerPreferenceGOOGLE"
+        }
+      ]
+    },
+    "VkSurfaceCapabilitiesHdrSmpteSt209450GOOGLE": {
+      "category": "struct",
+      "returnedOnly": true,
+      "structExtends": [
+        "VkSurfaceCapabilities2KHR"
+      ],
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "pointer": 1,
+          "optional": [
+            true
+          ]
+        },
+        {
+          "name": "hdrSmpteSt209450Supported",
+          "type": "VkBool32"
         }
       ]
     },
@@ -38842,6 +38932,7 @@
     },
     "VkGpaDeviceGetClockInfoAMD": {
       "category": "struct",
+      "returnedOnly": true,
       "members": [
         {
           "name": "sType",
@@ -61981,6 +62072,33 @@
         }
       ]
     },
+    "VkPhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE": {
+      "category": "struct",
+      "structExtends": [
+        "VkPhysicalDeviceFeatures2",
+        "VkDeviceCreateInfo"
+      ],
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "pointer": 1,
+          "optional": [
+            true
+          ],
+          "noAutoValidity": true
+        },
+        {
+          "name": "hdrSmpteSt209450",
+          "type": "VkBool32"
+        }
+      ]
+    },
     "VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT": {
       "category": "struct",
       "structExtends": [
@@ -64549,7 +64667,6 @@
     },
     "VkQueueFamilyDataGraphPropertiesARM": {
       "category": "struct",
-      "returnedOnly": true,
       "members": [
         {
           "name": "sType",
@@ -106143,6 +106260,16 @@
               "name": "VK_IMAGE_CREATE_2_RESERVED_21_BIT_IMG"
             }
           ]
+        },
+        {
+          "depends": "VK_KHR_device_address_commands",
+          "enums": [
+            {
+              "bitpos": 6,
+              "extends": "VkAddressCommandFlagBitsKHR",
+              "name": "VK_ADDRESS_COMMAND_RESERVED_6_BIT_IMG"
+            }
+          ]
         }
       ]
     },
@@ -139471,6 +139598,9 @@
       "supported": [
         "vulkan"
       ],
+      "ratified": [
+        "vulkan"
+      ],
       "depends": "VK_KHR_get_physical_device_properties2,VK_VERSION_1_1",
       "require": [
         {
@@ -140253,6 +140383,79 @@
             {
               "value": "\"VK_ARM_extension_717\"",
               "name": "VK_ARM_EXTENSION_717_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_NV_extension_718": {
+      "number": 718,
+      "author": "NV",
+      "contact": "Tony Zlatinski @tzlatinski",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_NV_EXTENSION_718_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_NV_extension_718\"",
+              "name": "VK_NV_EXTENSION_718_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_GOOGLE_hdr_smpte_st_209450_metadata": {
+      "number": 719,
+      "author": "GOOGLE",
+      "contact": "Christopher Cameron @ccameron",
+      "type": "device",
+      "depends": "(VK_KHR_get_physical_device_properties2,VK_VERSION_1_1)+VK_KHR_get_surface_capabilities2+VK_KHR_swapchain+VK_EXT_hdr_metadata",
+      "supported": [
+        "vulkan"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 1,
+              "name": "VK_GOOGLE_HDR_SMPTE_ST_209450_METADATA_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_GOOGLE_hdr_smpte_st_209450_metadata\"",
+              "name": "VK_GOOGLE_HDR_SMPTE_ST_209450_METADATA_EXTENSION_NAME"
+            },
+            {
+              "offset": 0,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE"
+            },
+            {
+              "offset": 1,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_HDR_SMPTE_ST_209450_GOOGLE"
+            },
+            {
+              "offset": 2,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE"
+            }
+          ],
+          "types": [
+            "VkPhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE",
+            "VkHdrSmpteSt209450PowerPreferenceGOOGLE",
+            "VkHdrSmpteSt209450GOOGLE",
+            "VkSurfaceCapabilitiesHdrSmpteSt209450GOOGLE"
+          ],
+          "features": [
+            {
+              "name": "hdrSmpteSt209450",
+              "struct": "VkPhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE"
             }
           ]
         }
