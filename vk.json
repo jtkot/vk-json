@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "a8b088a3fae12c8575407ea90c7c09bd653db923",
+    "commit": "70304594e73a065c7da6485165a59ff3d928e719",
     "headerVersion": "1.4.366",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
@@ -4002,6 +4002,10 @@
         "VK_DRIVER_ID_MOMOTEN": {
           "value": 34,
           "comment": "momoten Vulkan-on-OpenCL implementation"
+        },
+        "VK_DRIVER_ID_AURORA_BOREALIS": {
+          "value": 35,
+          "comment": "Aurora Silicon"
         }
       }
     },
