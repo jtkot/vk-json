@@ -1,8 +1,8 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "70304594e73a065c7da6485165a59ff3d928e719",
-    "headerVersion": "1.4.366",
+    "commit": "b94f8bd2d004d2949469d8a5071ee10eb7d23566",
+    "headerVersion": "1.4.367",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
       "This file, vk.xml, is the Vulkan API Registry. It is a critically important\nand normative part of the Vulkan Specification, including a canonical\nmachine-readable definition of the API, parameter and member validation\nlanguage incorporated into the Specification and reference pages, and other\nmaterial which is registered by Khronos, such as tags used by extension and\nlayer authors. The authoritative public version of vk.xml is maintained in\nthe default branch (currently named main) of the Khronos Vulkan GitHub\nproject. The authoritative private version is maintained in the default\nbranch of the member gitlab server."
@@ -7944,7 +7944,7 @@
         "vulkan",
         "vulkanbase"
       ],
-      "text": "// Version of this file #define VK_HEADER_VERSION 366",
+      "text": "// Version of this file #define VK_HEADER_VERSION 367",
       "variants": [
         {
           "category": "define",
@@ -11516,6 +11516,9 @@
           "type": "float",
           "const": true,
           "pointer": 1,
+          "optional": [
+            true
+          ],
           "len": [
             "queueCount"
           ]
@@ -28096,6 +28099,60 @@
         },
         {
           "name": "maintenance10",
+          "type": "VkBool32"
+        }
+      ]
+    },
+    "VkPhysicalDeviceMaintenance12PropertiesKHR": {
+      "category": "struct",
+      "returnedOnly": true,
+      "structExtends": [
+        "VkPhysicalDeviceProperties2"
+      ],
+      "requiredlimittype": "true",
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_12_PROPERTIES_KHR"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "pointer": 1,
+          "optional": [
+            true
+          ]
+        },
+        {
+          "name": "maxInputAttachmentIndex",
+          "type": "uint32_t",
+          "limitType": "max"
+        }
+      ]
+    },
+    "VkPhysicalDeviceMaintenance12FeaturesKHR": {
+      "category": "struct",
+      "structExtends": [
+        "VkPhysicalDeviceFeatures2",
+        "VkDeviceCreateInfo"
+      ],
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "pointer": 1,
+          "optional": [
+            true
+          ]
+        },
+        {
+          "name": "maintenance12",
           "type": "VkBool32"
         }
       ]
@@ -90636,7 +90693,11 @@
         {
           "name": "pFaultCounts",
           "type": "uint32_t",
-          "pointer": 1
+          "pointer": 1,
+          "optional": [
+            false,
+            true
+          ]
         },
         {
           "name": "pFaultInfo",
@@ -126208,6 +126269,11 @@
             {
               "value": "\"VK_COREAVI_extension_447\"",
               "name": "VK_COREAVI_EXTENSION_447_EXTENSION_NAME"
+            },
+            {
+              "bitpos": 8,
+              "extends": "VkBufferCreateFlagBits",
+              "name": "VK_BUFFER_CREATE_RESERVED_8_BIT_LYNX"
             }
           ]
         }
@@ -137232,11 +137298,6 @@
               "name": "VK_BUFFER_USAGE_2_RESERVED_18_BIT_EXT"
             },
             {
-              "bitpos": 30,
-              "extends": "VkBufferUsageFlagBits2",
-              "name": "VK_BUFFER_USAGE_2_RESERVED_30_BIT_EXT"
-            },
-            {
               "bitpos": 15,
               "extends": "VkBuildAccelerationStructureFlagBitsKHR",
               "name": "VK_BUILD_ACCELERATION_STRUCTURE_RESERVED_15_BIT_EXT"
@@ -139445,24 +139506,48 @@
         }
       ]
     },
-    "VK_KHR_extension_681": {
+    "VK_KHR_maintenance12": {
       "number": 681,
       "type": "device",
+      "depends": "VK_KHR_get_physical_device_properties2,VK_VERSION_1_1",
       "author": "KHR",
       "contact": "Mike Blumenkrantz @zmike",
       "supported": [
-        "disabled"
+        "vulkan"
+      ],
+      "ratified": [
+        "vulkan"
       ],
       "require": [
         {
           "enums": [
             {
-              "value": 0,
-              "name": "VK_KHR_EXTENSION_681_SPEC_VERSION"
+              "value": 1,
+              "name": "VK_KHR_MAINTENANCE_12_SPEC_VERSION"
             },
             {
-              "value": "\"VK_KHR_extension_681\"",
-              "name": "VK_KHR_EXTENSION_681_EXTENSION_NAME"
+              "value": "\"VK_KHR_maintenance12\"",
+              "name": "VK_KHR_MAINTENANCE_12_EXTENSION_NAME"
+            },
+            {
+              "offset": 0,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR"
+            },
+            {
+              "offset": 1,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_12_PROPERTIES_KHR"
+            }
+          ],
+          "types": [
+            "VkPhysicalDeviceMaintenance12FeaturesKHR",
+            "VkPhysicalDeviceMaintenance12PropertiesKHR"
+          ],
+          "features": [
+            {
+              "name": "maintenance12",
+              "struct": "VkPhysicalDeviceMaintenance12FeaturesKHR"
             }
           ]
         }
@@ -140460,6 +140545,160 @@
             {
               "name": "hdrSmpteSt209450",
               "struct": "VkPhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_ARM_extension_720": {
+      "number": 720,
+      "author": "ARM",
+      "contact": "Kevin Petit @kpet",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_ARM_EXTENSION_720_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_ARM_extension_720\"",
+              "name": "VK_ARM_EXTENSION_720_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_LYNX_extension_721": {
+      "number": 721,
+      "author": "LYNX",
+      "contact": "Aidan Fabius @afabius",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_LYNX_EXTENSION_721_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_LYNX_extension_721\"",
+              "name": "VK_LYNX_EXTENSION_721_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_LYNX_extension_722": {
+      "number": 722,
+      "author": "LYNX",
+      "contact": "Aidan Fabius @afabius",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_LYNX_EXTENSION_722_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_LYNX_extension_722\"",
+              "name": "VK_LYNX_EXTENSION_722_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_LYNX_extension_723": {
+      "number": 723,
+      "author": "LYNX",
+      "contact": "Aidan Fabius @afabius",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_LYNX_EXTENSION_723_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_LYNX_extension_723\"",
+              "name": "VK_LYNX_EXTENSION_723_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_LYNX_extension_724": {
+      "number": 724,
+      "author": "LYNX",
+      "contact": "Aidan Fabius @afabius",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_LYNX_EXTENSION_724_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_LYNX_extension_724\"",
+              "name": "VK_LYNX_EXTENSION_724_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_LYNX_extension_725": {
+      "number": 725,
+      "author": "LYNX",
+      "contact": "Aidan Fabius @afabius",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_LYNX_EXTENSION_725_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_LYNX_extension_725\"",
+              "name": "VK_LYNX_EXTENSION_725_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_KHR_extension_726": {
+      "number": 726,
+      "author": "KHR",
+      "contact": "Mike Blumenkrantz @zmike",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_KHR_EXTENSION_726_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_KHR_extension_726\"",
+              "name": "VK_KHR_EXTENSION_726_EXTENSION_NAME"
             }
           ]
         }
