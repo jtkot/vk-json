@@ -45,5 +45,5 @@ jobs:
             VER="$(python -c "import json;print(json.load(open('vk.json'))['meta']['headerVersion'])")"
             TAG="v$VER"
             git tag "$TAG"
-            git push -f tag "$TAG"
+            git push -f origin tag "$TAG"
           fi
