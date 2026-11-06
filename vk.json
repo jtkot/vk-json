@@ -1,8 +1,8 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "b94f8bd2d004d2949469d8a5071ee10eb7d23566",
-    "headerVersion": "1.4.367",
+    "commit": "fa30d4e312e843193601be7cb926c7e25d9ec885",
+    "headerVersion": "1.4.368",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
       "This file, vk.xml, is the Vulkan API Registry. It is a critically important\nand normative part of the Vulkan Specification, including a canonical\nmachine-readable definition of the API, parameter and member validation\nlanguage incorporated into the Specification and reference pages, and other\nmaterial which is registered by Khronos, such as tags used by extension and\nlayer authors. The authoritative public version of vk.xml is maintained in\nthe default branch (currently named main) of the Khronos Vulkan GitHub\nproject. The authoritative private version is maintained in the default\nbranch of the member gitlab server."
@@ -7944,7 +7944,7 @@
         "vulkan",
         "vulkanbase"
       ],
-      "text": "// Version of this file #define VK_HEADER_VERSION 367",
+      "text": "// Version of this file #define VK_HEADER_VERSION 368",
       "variants": [
         {
           "category": "define",
@@ -25111,7 +25111,6 @@
         {
           "name": "pLayer",
           "type": "CAMetalLayer",
-          "const": true,
           "pointer": 1,
           "noAutoValidity": true
         }
@@ -52135,6 +52134,9 @@
       "category": "basetype",
       "baseType": "void"
     },
+    "VkInternalHandleNV": {
+      "category": "basetype"
+    },
     "VkMemoryGetRemoteAddressInfoNV": {
       "category": "struct",
       "members": [
@@ -67281,6 +67283,33 @@
         }
       ]
     },
+    "VkPhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT": {
+      "category": "struct",
+      "structExtends": [
+        "VkPhysicalDeviceFeatures2",
+        "VkDeviceCreateInfo"
+      ],
+      "members": [
+        {
+          "name": "sType",
+          "type": "VkStructureType",
+          "values": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT"
+        },
+        {
+          "name": "pNext",
+          "type": "void",
+          "pointer": 1,
+          "optional": [
+            true
+          ],
+          "noAutoValidity": true
+        },
+        {
+          "name": "vertexAddressBindingUnrestricted",
+          "type": "VkBool32"
+        }
+      ]
+    },
     "VkConditionalRenderingBeginInfo2EXT": {
       "category": "struct",
       "members": [
@@ -67416,7 +67445,8 @@
         },
         {
           "name": "addressRange",
-          "type": "VkStridedDeviceAddressRangeKHR"
+          "type": "VkStridedDeviceAddressRangeKHR",
+          "noAutoValidity": true
         },
         {
           "name": "addressFlags",
@@ -95307,6 +95337,62 @@
           "len": [
             "pFormatCount"
           ]
+        }
+      ]
+    },
+    "vkGetPhysicalDeviceInternalHandleNV": {
+      "returnType": "void",
+      "params": [
+        {
+          "name": "physicalDevice",
+          "type": "VkPhysicalDevice"
+        },
+        {
+          "name": "pHandle",
+          "type": "VkInternalHandleNV",
+          "pointer": 1
+        }
+      ]
+    },
+    "vkGetDeviceInternalHandleNV": {
+      "returnType": "void",
+      "params": [
+        {
+          "name": "device",
+          "type": "VkDevice"
+        },
+        {
+          "name": "pHandle",
+          "type": "VkInternalHandleNV",
+          "pointer": 1
+        }
+      ]
+    },
+    "vkGetQueueInternalHandleNV": {
+      "returnType": "void",
+      "params": [
+        {
+          "name": "queue",
+          "type": "VkQueue"
+        },
+        {
+          "name": "pHandle",
+          "type": "VkInternalHandleNV",
+          "pointer": 1
+        }
+      ]
+    },
+    "vkGetCommandBufferInternalHandleNV": {
+      "returnType": "void",
+      "params": [
+        {
+          "name": "commandBuffer",
+          "type": "VkCommandBuffer"
+        },
+        {
+          "name": "pHandle",
+          "type": "VkInternalHandleNV",
+          "pointer": 1
         }
       ]
     }
@@ -138285,24 +138371,35 @@
         }
       ]
     },
-    "VK_NV_extension_668": {
+    "VK_NV_internal_handle": {
       "number": 668,
+      "type": "device",
       "author": "NV",
       "contact": "Chris Lentini @clentini",
       "supported": [
-        "disabled"
+        "vulkan"
       ],
+      "noFeatures": true,
       "require": [
         {
           "enums": [
             {
-              "value": 0,
-              "name": "VK_NV_EXTENSION_668_SPEC_VERSION"
+              "value": 1,
+              "name": "VK_NV_INTERNAL_HANDLE_SPEC_VERSION"
             },
             {
-              "value": "\"VK_NV_extension_668\"",
-              "name": "VK_NV_EXTENSION_668_EXTENSION_NAME"
+              "value": "\"VK_NV_internal_handle\"",
+              "name": "VK_NV_INTERNAL_HANDLE_EXTENSION_NAME"
             }
+          ],
+          "types": [
+            "VkInternalHandleNV"
+          ],
+          "commands": [
+            "vkGetPhysicalDeviceInternalHandleNV",
+            "vkGetDeviceInternalHandleNV",
+            "vkGetQueueInternalHandleNV",
+            "vkGetCommandBufferInternalHandleNV"
           ]
         }
       ]
@@ -139483,24 +139580,39 @@
         }
       ]
     },
-    "VK_EXT_extension_680": {
+    "VK_EXT_vertex_address_binding_unrestricted": {
       "number": 680,
       "type": "device",
+      "depends": "VK_KHR_device_address_commands",
       "author": "EXT",
       "contact": "Mike Blumenkrantz @zmike",
       "supported": [
-        "disabled"
+        "vulkan"
       ],
       "require": [
         {
           "enums": [
             {
-              "value": 0,
-              "name": "VK_EXT_EXTENSION_680_SPEC_VERSION"
+              "value": 1,
+              "name": "VK_EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_SPEC_VERSION"
             },
             {
-              "value": "\"VK_EXT_extension_680\"",
-              "name": "VK_EXT_EXTENSION_680_EXTENSION_NAME"
+              "value": "\"VK_EXT_vertex_address_binding_unrestricted\"",
+              "name": "VK_EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_EXTENSION_NAME"
+            },
+            {
+              "offset": 0,
+              "extends": "VkStructureType",
+              "name": "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT"
+            }
+          ],
+          "types": [
+            "VkPhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT"
+          ],
+          "features": [
+            {
+              "name": "vertexAddressBindingUnrestricted",
+              "struct": "VkPhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT"
             }
           ]
         }
@@ -140699,6 +140811,116 @@
             {
               "value": "\"VK_KHR_extension_726\"",
               "name": "VK_KHR_EXTENSION_726_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_NV_extension_727": {
+      "number": 727,
+      "author": "NV",
+      "contact": "Jeff Bolz @jeffbolznv",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_NV_EXTENSION_727_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_NV_extension_727\"",
+              "name": "VK_NV_EXTENSION_727_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_NV_extension_728": {
+      "number": 728,
+      "author": "NV",
+      "contact": "Jeff Bolz @jeffbolznv",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_NV_EXTENSION_728_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_NV_extension_728\"",
+              "name": "VK_NV_EXTENSION_728_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_ARM_extension_729": {
+      "number": 729,
+      "author": "ARM",
+      "contact": "Kevin Petit @kpet",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_ARM_EXTENSION_729_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_ARM_extension_729\"",
+              "name": "VK_ARM_EXTENSION_729_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_ARM_extension_730": {
+      "number": 730,
+      "author": "ARM",
+      "contact": "Kevin Petit @kpet",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_ARM_EXTENSION_730_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_ARM_extension_730\"",
+              "name": "VK_ARM_EXTENSION_730_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_ARM_extension_731": {
+      "number": 731,
+      "author": "ARM",
+      "contact": "Kevin Petit @kpet",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_ARM_EXTENSION_731_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_ARM_extension_731\"",
+              "name": "VK_ARM_EXTENSION_731_EXTENSION_NAME"
             }
           ]
         }
