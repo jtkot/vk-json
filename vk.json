@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "fa30d4e312e843193601be7cb926c7e25d9ec885",
+    "commit": "98ab10166b5cb93c17acabdd4e911d10cf853a3a",
     "headerVersion": "1.4.368",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
@@ -7714,6 +7714,10 @@
     "APEX": {
       "author": "Apex Compute",
       "contact": "Selim Sandal @selimsandal, selim@apexcompute.com"
+    },
+    "RFIVE": {
+      "author": "R5 Operating System",
+      "contact": "@r5-operating-system"
     }
   },
   "types": {
@@ -140921,6 +140925,29 @@
             {
               "value": "\"VK_ARM_extension_731\"",
               "name": "VK_ARM_EXTENSION_731_EXTENSION_NAME"
+            }
+          ]
+        }
+      ]
+    },
+    "VK_RFIVE_view_surface": {
+      "number": 732,
+      "type": "instance",
+      "author": "RFIVE",
+      "contact": "@r5-operating-system",
+      "supported": [
+        "disabled"
+      ],
+      "require": [
+        {
+          "enums": [
+            {
+              "value": 0,
+              "name": "VK_RFIVE_VIEW_SURFACE_SPEC_VERSION"
+            },
+            {
+              "value": "\"VK_RFIVE_view_surface\"",
+              "name": "VK_RFIVE_VIEW_SURFACE_EXTENSION_NAME"
             }
           ]
         }
