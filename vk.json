@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "KhronosGroup/Vulkan-Docs",
-    "commit": "98ab10166b5cb93c17acabdd4e911d10cf853a3a",
+    "commit": "f7de774cace1509af0f10b8d859c973b5354ff62",
     "headerVersion": "1.4.368",
     "license": [
       "Copyright 2015-2026 The Khronos Group Inc.\nSPDX-License-Identifier: Apache-2.0 OR MIT",
